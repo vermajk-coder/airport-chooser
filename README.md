@@ -66,3 +66,9 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Implementation details
+
+- created a custom dropdown which supports infinite scroll.By default it displays 20 records
+- every time the user scrolls, the event gets captured and 20(configurable) records are added to the list
+  -the options in the drop down displays airport name, city/country, code

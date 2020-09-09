@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import React from "react";
+import "./App.css";
+
+import Dropdown from "./component/dropdown";
 
 function App() {
+  const [airports, setAirports] = React.useState([]);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    axios.get("./airports.json").then(airport => {
+      if (isMounted) {
+        const airportData = airport.data.filter(_data => {
+          return _data.type === "Airports" && _data.type && _data.name;
+        });
+        setAirports(airportData);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (!airports.length) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Dropdown airports={airports} datasize={20} />
     </div>
   );
 }
